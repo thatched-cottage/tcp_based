@@ -1,0 +1,8 @@
+main
+*.log
+bin/
+*.exe
+.idea/
+log.txt
+go.sum
+test_result
