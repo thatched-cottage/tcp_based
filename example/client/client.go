@@ -7,14 +7,17 @@ import (
 	"gitee.com/wuxiansheng/tcp_based.git/pkg/command"
 	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
 	"net"
+	"time"
 )
 
 func main() {
-	pkg.Server_name = base_info.Clinet
+	pkg.Server_name = base_info.Client
 	for {
 		conn, err := net.Dial("tcp", ":8889")
 		if err != nil {
 			log.Debugf("dial error: %s", err)
+			time.Sleep(time.Second * 1)
+			continue
 		}
 
 		if conn != nil {
@@ -31,7 +34,7 @@ func HandleConn(c net.Conn) {
 	for {
 		pkgInfo := &base_info.PkgInfo{}
 		pkgInfo.PkgType = base_info.CommonPkg
-		pkgInfo.Source = base_info.Clinet
+		pkgInfo.Source = base_info.Client
 		pkgInfo.ClientId = []byte("1")
 		log.Debugf("请输入发往那个服务器:")
 	NODE:
@@ -79,7 +82,7 @@ func HandleConn(c net.Conn) {
 
 func readHandle(c net.Conn) {
 	log.Debugf("Waiting to receive package")
-	b := make([]byte, base_info.ByteLenth)
+	b := make([]byte, base_info.ByteLength)
 	_, err := c.Read(b)
 	if err != nil {
 		log.Debugf("conn read err:%s", err.Error())
@@ -97,7 +100,7 @@ func RegisterClient(c net.Conn) error {
 
 	pkgInfo := &base_info.PkgInfo{}
 	pkgInfo.PkgType = base_info.RegisterClientPkg
-	pkgInfo.Source = base_info.Clinet
+	pkgInfo.Source = base_info.Client
 	pkgInfo.Target = base_info.CentralNode
 	pkgInfo.ClientId = []byte("1")
 
@@ -107,7 +110,7 @@ func RegisterClient(c net.Conn) error {
 		return err
 	}
 
-	b := make([]byte, base_info.ByteLenth)
+	b := make([]byte, base_info.ByteLength)
 	_, err = c.Read(b)
 	if nil != err {
 		log.Fatalf("Register client send msg err:%s ", err.Error())

@@ -24,7 +24,7 @@ func (this *readQueue) Handle() {
 		switch pkgInfo.Target {
 		case base_info.Node1, base_info.Node2:
 			ININP.IINP.SendMsg(pkgInfo)
-		case base_info.Clinet:
+		case base_info.Client:
 			ININP.IENP.SendMsg(pkgInfo)
 		}
 	}

@@ -11,9 +11,9 @@ type PkgInfo struct {
 	// Pkg 的类型
 	PkgType byte
 	// 发往的目标，确定发到哪一个目标，central node 会根据Target 确定你发往的目标，进行转发。
-	Target Server_node
+	Target ServerNode
 	// 自己是哪个Node节点，标识自己的属于那个Node方便接收方回包
-	Source Server_node
+	Source ServerNode
 
 	// 如果是client发的信息，需要携带ClientId。
 	ClientId []byte
@@ -39,9 +39,9 @@ func BToPkgInfo(b *[]byte) *PkgInfo {
 	offset := uint32(0)
 	pkgInfo.PkgType = (*b)[offset]
 	offset++
-	pkgInfo.Source = Server_node((*b)[offset])
+	pkgInfo.Source = ServerNode((*b)[offset])
 	offset++
-	pkgInfo.Target = Server_node((*b)[offset])
+	pkgInfo.Target = ServerNode((*b)[offset])
 	offset++
 	if (*b)[offset] > 0 { // clientId 长度
 		ClientIdLength := uint32((*b)[offset])

@@ -6,6 +6,7 @@ import (
 	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
 	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
 	"net"
+	"time"
 )
 
 type InternalNetwork struct {
@@ -38,6 +39,7 @@ func (this *InternalNetwork) Run(address string) {
 		conn, err := net.Dial("tcp", address)
 		if err != nil {
 			log.Debugf("dial error: %s", err)
+			time.Sleep(time.Second * 1)
 			continue
 		}
 		log.Debugf("connect to server ok")
@@ -56,7 +58,7 @@ func (this *InternalNetwork) HandleConn(c net.Conn) {
 func (this *InternalNetwork) ReadHandle(c net.Conn) {
 	defer c.Close()
 	for {
-		b := make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+		b := make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 		n, err := c.Read(b)
 		if err != nil {
 			this.wq.Close()
@@ -85,7 +87,7 @@ func (this *InternalNetwork) RegisterNode(c net.Conn) error {
 		log.Errorf("conn Write err:", err.Error())
 		return err
 	}
-	b = make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+	b = make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 	_, err = c.Read(b)
 	if err != nil {
 		log.Errorf("conn Write err:", err.Error())

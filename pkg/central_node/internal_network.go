@@ -10,7 +10,7 @@ import (
 
 type InternalNetwork struct {
 	rq  readQueue
-	wqs map[base_info.Server_node]*writeQueue
+	wqs map[base_info.ServerNode]*writeQueue
 }
 
 func init() {
@@ -22,19 +22,19 @@ func (this *InternalNetwork) Init() {
 	log.Debugf("Init")
 	this.rq.q.Init()
 	go this.rq.Handle()
-	this.wqs = map[base_info.Server_node]*writeQueue{}
+	this.wqs = map[base_info.ServerNode]*writeQueue{}
 	this.wqs[base_info.Node1] = &writeQueue{}
 	this.wqs[base_info.Node1].Init()
 	log.Debugf("map adder:%p", this.wqs[base_info.Node1])
 	this.wqs[base_info.Node2] = &writeQueue{}
 	this.wqs[base_info.Node2].Init()
 	log.Debugf("map adder:%p", this.wqs[base_info.Node2])
-	this.wqs[base_info.Clinet] = &writeQueue{}
-	this.wqs[base_info.Clinet].Init()
-	log.Debugf("map adder:%p", this.wqs[base_info.Clinet])
+	this.wqs[base_info.Client] = &writeQueue{}
+	this.wqs[base_info.Client].Init()
+	log.Debugf("map adder:%p", this.wqs[base_info.Client])
 }
 func (this *InternalNetwork) SendMsg(pkgInfo *base_info.PkgInfo) {
-	this.wqs[base_info.Server_node(pkgInfo.Target)].PushBack(pkgInfo.B)
+	this.wqs[pkgInfo.Target].PushBack(pkgInfo.B)
 }
 func (this *InternalNetwork) SendsyncMsg(pkgInfo *base_info.PkgInfo) {
 	//log.Debugf("readQueue SendMsg, param msg:%s ,target: ", *msg, base_info.GetNodeName(target))
@@ -63,13 +63,15 @@ func (this *InternalNetwork) HandleConn(c net.Conn) {
 	}
 	go this.ReadHandle(source, c)
 }
-func (this *InternalNetwork) ReadHandle(source byte, c net.Conn) {
+func (this *InternalNetwork) ReadHandle(source base_info.ServerNode, c net.Conn) {
 	defer c.Close()
 	for {
-		b := make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+		b := make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 		n, err := c.Read(b)
 		if err != nil {
-			this.wqs[base_info.Server_node(source)].Close()
+			if this.wqs[source] != nil {
+				this.wqs[source].Close()
+			}
 			log.Debugf("conn read err:%s", err.Error())
 			return
 		}
@@ -87,24 +89,27 @@ func (this *InternalNetwork) ReadHandle(source byte, c net.Conn) {
 		}
 	}
 }
-func (this *InternalNetwork) RegisterNode(c net.Conn) (byte, error) {
-	b := make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+func (this *InternalNetwork) RegisterNode(c net.Conn) (base_info.ServerNode, error) {
+	b := make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 	_, err := c.Read(b)
 	if err != nil {
 		log.Debugf("conn read err:%s", err.Error())
 		return 0, err
 	}
-	source := b[1]
+	source := base_info.ServerNode(b[1])
 	switch b[0] {
-	case base_info.RegisterPkg, base_info.RegisterClientPkg:
-		log.Debugf("source:%s", base_info.NodeName[base_info.Server_node(source)])
-		log.Debugf("map adder:%p", this.wqs[base_info.Server_node(source)])
-		this.wqs[base_info.Server_node(source)].Close()
+	case base_info.RegisterPkg:
+		log.Debugf("source:%s", base_info.NodeName[source])
+		log.Debugf("map adder:%p", this.wqs[source])
+		if this.wqs[source] != nil {
+			this.wqs[source].Close()
+		}
 		go func() {
-			this.wqs[base_info.Server_node(source)].HandleConn(c, base_info.Server_node(source))
+			this.wqs[source].HandleConn(c, source)
+			this.wqs[source].PushBack(&b)
 		}()
-		this.wqs[base_info.Server_node(source)].PushBack(&b)
-		log.Debugf("register node:%s", base_info.NodeName[base_info.Server_node(source)])
+
+		log.Debugf("register node:%s", base_info.NodeName[source])
 	default:
 		log.Errorf("pkg type error")
 		return 0, fmt.Errorf("pkg type error")

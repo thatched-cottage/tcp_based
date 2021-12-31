@@ -8,8 +8,8 @@ import (
 )
 
 type writeQueue struct {
-	q utils.Queue
-	base_info.Server_node
+	base_info.ServerNode
+	q     utils.Queue
 	c     *net.Conn
 	close chan interface{}
 }
@@ -40,9 +40,9 @@ func (this *writeQueue) Close() {
 	this.close <- true
 }
 
-func (this *writeQueue) HandleConn(c net.Conn, node base_info.Server_node) {
+func (this *writeQueue) HandleConn(c net.Conn, node base_info.ServerNode) {
 	log.Debugf("HandleConn")
-	this.Server_node = node
+	this.ServerNode = node
 	this.c = &c
 	defer (*this.c).Close()
 	for {
@@ -52,7 +52,7 @@ func (this *writeQueue) HandleConn(c net.Conn, node base_info.Server_node) {
 			this.c = nil
 			return
 		case i := <-this.Pop():
-			log.Debugf("this is %s write queue", base_info.NodeName[(this.Server_node)])
+			log.Debugf("this is %s write queue", base_info.NodeName[this.ServerNode])
 			b := i.(*[]byte)
 			n, err := c.Write(*b)
 			if err != nil {
@@ -65,5 +65,5 @@ func (this *writeQueue) HandleConn(c net.Conn, node base_info.Server_node) {
 			}
 		}
 	}
-	log.Debugf("node close:", base_info.NodeName[(this.Server_node)])
+	log.Debugf("node close:", base_info.NodeName[this.ServerNode])
 }

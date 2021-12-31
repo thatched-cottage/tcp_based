@@ -64,7 +64,7 @@ func (this *ExtranetNetwork) HandleConn(c net.Conn) {
 func (this *ExtranetNetwork) ReadHandle(clientId []byte, c net.Conn) {
 	defer c.Close()
 	for {
-		b := make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+		b := make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 		n, err := c.Read(b)
 		log.Debugf("read byte:%v", b)
 		if err != nil {
@@ -90,7 +90,7 @@ func (this *ExtranetNetwork) ReadHandle(clientId []byte, c net.Conn) {
 	}
 }
 func (this *ExtranetNetwork) RegisterNode(c net.Conn) ([]byte, error) {
-	b := make([]byte, base_info.ByteLenth) //base_info.ByteLenth 包的长度
+	b := make([]byte, base_info.ByteLength) //base_info.ByteLength 包的长度
 	_, err := c.Read(b)
 	if err != nil {
 		log.Debugf("conn read err:%s", err.Error())

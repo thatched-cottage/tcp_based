@@ -1,15 +1,15 @@
 package base_info
 
-type Server_node byte
+type ServerNode byte
 
 const (
-	CentralNode Server_node = iota
+	CentralNode ServerNode = iota
 	Node1
 	Node2
-	Clinet
+	Client
 )
 
-const ByteLenth = 1024 // 包最大
+const ByteLength = 1024 // payload length
 
 const (
 	RegisterClientPkg byte = iota
@@ -18,9 +18,9 @@ const (
 	RegisterPkg
 )
 
-var NodeName = map[Server_node]string{
+var NodeName = map[ServerNode]string{
 	CentralNode: `中心节点`,
 	Node1:       `节点1`,
 	Node2:       `节点2`,
-	Clinet:      `客户端`,
+	Client:      `客户端`,
 }
