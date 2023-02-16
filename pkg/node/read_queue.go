@@ -1,11 +1,11 @@
 package node
 
 import (
-	"gitee.com/wuxiansheng/tcp_based.git/pkg"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/ININP"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
-	"gitee.com/wuxiansheng/tcp_based.git/utils"
+	"github.com/thatched-cottage/tcp_based.git/pkg"
+	"github.com/thatched-cottage/tcp_based.git/pkg/ININP"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/utils"
 )
 
 // 包的数据组成

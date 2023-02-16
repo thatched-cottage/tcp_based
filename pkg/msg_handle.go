@@ -2,9 +2,9 @@ package pkg
 
 import (
 	"fmt"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/command"
-	handle2 "gitee.com/wuxiansheng/tcp_based.git/pkg/handle"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/command"
+	handle2 "github.com/thatched-cottage/tcp_based.git/pkg/handle"
 )
 
 type Packet struct {

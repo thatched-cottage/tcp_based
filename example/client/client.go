@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/command"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/pkg"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/command"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
 	"net"
 	"time"
 )

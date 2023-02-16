@@ -1,9 +1,9 @@
 package central_node
 
 import (
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
-	"gitee.com/wuxiansheng/tcp_based.git/utils"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/utils"
 	"net"
 )
 

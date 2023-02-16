@@ -2,9 +2,9 @@ package central_node
 
 import (
 	"fmt"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/ININP"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/pkg/ININP"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
 	"net"
 )
 

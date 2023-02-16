@@ -1,7 +1,7 @@
 package ININP
 
 import (
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/base_info"
+	"github.com/thatched-cottage/tcp_based.git/pkg/base_info"
 )
 
 type INetworkProcessing interface {
