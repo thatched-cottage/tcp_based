@@ -2,8 +2,8 @@ package base_info
 
 import (
 	"encoding/binary"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/command"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/pkg/command"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
 )
 
 // 对于包的封装，服务器与客户端之前是需要一种协议确定是否可以连接。

@@ -2,7 +2,7 @@ package handle
 
 import (
 	"fmt"
-	"gitee.com/wuxiansheng/tcp_based.git/pkg/log"
+	"github.com/thatched-cottage/tcp_based.git/pkg/log"
 	"unsafe"
 )
 
